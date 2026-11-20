@@ -108,4 +108,19 @@ document.addEventListener('DOMContentLoaded', () => {
         bgMusic.currentTime = 0;
         window.location.reload();
     });
+
+    // --- 7. Pausar la música si el usuario sale de la página o bloquea el celular ---
+    document.addEventListener('visibilitychange', () => {
+        // Si el documento se oculta (el usuario cambia de pestaña o bloquea el celular)
+        if (document.hidden) {
+            bgMusic.pause();
+        }
+        // Si el usuario vuelve a la página, reanudamos la música
+        else {
+            // Solo le damos play si ya la había activado antes (para no forzar el autoplay)
+            if (bgMusic.currentTime > 0) {
+                bgMusic.play().catch(error => console.log("Reanudación bloqueada:", error));
+            }
+        }
+    });
 });
