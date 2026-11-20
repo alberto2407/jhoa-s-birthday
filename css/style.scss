@@ -477,6 +477,46 @@ h1 {
     background: #e84393;
 }
 
+/* --- CONTENEDOR DE BOTONES LADO A LADO --- */
+.button-group {
+    display: flex;
+    justify-content: center;
+    /* Los centra horizontalmente */
+    gap: 15px;
+    /* Espacio entre ellos */
+    margin-top: 20px;
+    /* Separación de la carta */
+    flex-wrap: wrap;
+    /* Si la pantalla es muy pequeña, se ponen uno abajo del otro */
+}
+
+/* Ajustamos un poco los botones para que se vean bien en grupo */
+.button-group .hidden-btn {
+    margin-top: 0;
+    /* Quitamos el margen superior que tenían por defecto */
+    padding: 10px 20px;
+    /* Un poco más compactos */
+}
+
+/* --- ANIMACIÓN DE CIERRE DE CARTA --- */
+.letter-content.closing {
+    animation: foldAway 0.8s ease-in forwards;
+}
+
+@keyframes foldAway {
+    0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.8) translateY(-50px);
+        /* Se encoge y sube */
+        visibility: hidden;
+    }
+}
+
 /* --- DISEÑO RESPONSIVO PARA CELULARES --- */
 @media (max-width: 600px) {
 
@@ -517,5 +557,46 @@ h1 {
     .light-glow {
         width: 300px;
         height: 300px;
+    }
+
+    /* --- 5. AJUSTES PARA LA CARTA EN MÓVILES --- */
+
+    /* Achicamos el contenedor general del sobre */
+    .envelope-container {
+        padding: 1rem;
+        width: 95%;
+        /* Aprovechamos más el ancho de la pantalla */
+    }
+
+    /* Hacemos la carta más pequeña para que quepan los botones */
+    .letter-content {
+        padding: 20px;
+        max-height: 50vh;
+        /* Ocupa la mitad de la pantalla, dejando espacio abajo */
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+    }
+
+    /* Ponemos los botones uno debajo del otro y más anchos */
+    .button-group {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 15px;
+        width: 100%;
+
+        .hidden-btn {
+            width: 100%;
+            /* Botones anchos para que sean fáciles de tocar */
+            padding: 12px;
+            margin-top: 0;
+        }
     }
 }

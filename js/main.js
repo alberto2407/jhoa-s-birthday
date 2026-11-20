@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 textElement.innerHTML += introMessage.charAt(i);
             }
             i++;
-            setTimeout(typeWriter, 40);
+            setTimeout(typeWriter, 80);
         } else {
             nextBtn.classList.add('show');
         }
@@ -100,6 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
         letterContent.style.display = 'block';
         btnRestart.style.display = 'block';
         btnRestart.classList.add('show');
+
+        // MOSTRAMOS EL BOTÓN DE VOLVER AL PASTEL
+        btnBackToCake.style.display = 'block';
+        btnBackToCake.classList.add('show');
     });
 
     // --- 6. Reiniciar todo ---
@@ -122,5 +126,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 bgMusic.play().catch(error => console.log("Reanudación bloqueada:", error));
             }
         }
+    });
+
+    // --- 8. Botón para volver al pastel ---
+    const btnBackToCake = document.getElementById('btn-back-to-cake');
+
+    btnBackToCake.addEventListener('click', () => {
+        // 1. Le aplicamos la animación de "guardarse" a la carta
+        letterContent.classList.add('closing');
+
+        // 2. Esperamos a que termine la animación de la carta (0.8 segundos)
+        setTimeout(() => {
+            // Ocultamos la pantalla del sobre
+            screen3.classList.remove('active');
+            envelopeContainer.classList.remove('active');
+
+            // Restauramos el sobre cerrado para que quede listo si quiere volver a entrar
+            envelopeClosed.style.display = 'flex';
+
+            // Limpiamos la carta para que vuelva a su estado original
+            letterContent.style.display = 'none';
+            letterContent.classList.remove('closing');
+
+            // Ocultamos los botones
+            btnRestart.style.display = 'none';
+            btnRestart.classList.remove('show');
+            btnBackToCake.style.display = 'none';
+            btnBackToCake.classList.remove('show');
+
+            // 3. Hacemos que aparezca de nuevo la pantalla del pastel (se activa la luz de nuevo)
+            setTimeout(() => {
+                screen2.classList.add('active');
+
+                // Reseteamos el botón de confeti para que pueda volver a usarlo
+                confettiBtn.disabled = false;
+                confettiBtn.textContent = '¡Sorpresa!';
+
+                // Ocultamos el botón de "Ir a la carta" para que tenga que darle a sorpresa de nuevo
+                btnToMemories.style.display = 'none';
+                btnToMemories.classList.remove('show');
+
+            }, 500); // Transición suave entre pantallas
+
+        }, 800); // Este tiempo debe coincidir con la duración de la animación del CSS
     });
 });
